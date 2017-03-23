@@ -6,7 +6,6 @@ import java.util.List;
 import negocios.admInventario.FacAdmInventario;
 import objetosNegocio.Apartado;
 import objetosNegocio.MovimientoEnApartado;
-import objetosNegocio.Talla;
 import objetosNegocio.TallaApartado;
 import persistencia.Persistencia;
 import pvcco.interfaces.IntAdmInventario;
@@ -137,4 +136,56 @@ public class AdmApartados {
         return persistencia.obtenApartados();
     }
     
+         /**
+     * Busca una talla apartada existente con el mismo ID dado por el parametro. En caso
+     * de que no se encuentre se regresara nulo.
+     *
+     * @param talla La talla apartada con el ID a buscar.
+     * @return La talla apartada en la base de datos si es que existe.
+     *
+     * @throws Exception
+     */
+    public TallaApartado obten(TallaApartado talla) throws Exception {
+        IntPersistencia persistencia = new Persistencia();
+        
+        return persistencia.obten(talla);
+    }
+    
+    /**
+     * Busca un movimiento en apartado existente con el mismo ID dado por el parametro. En caso
+     * de que no se encuentre se regresara nulo.
+     *
+     * @param talla El movimiento en apartado con el ID a buscar.
+     * @return El movimiento en apartado en la base de datos si es que existe.
+     *
+     * @throws Exception
+     */
+    public MovimientoEnApartado obten(MovimientoEnApartado mov) throws Exception {
+        IntPersistencia persistencia = new Persistencia();
+        
+        return persistencia.obten(mov);
+    }
+    
+     /* Regresa una lista de todos los registros en TallasApartado
+     *
+     * @return La lista de todos las tallas apartadas existentes.
+     * @throws Exception
+     */
+    public List<TallaApartado> obtenTallasApartadas() throws Exception {
+        IntPersistencia persistencia = new Persistencia();
+        
+        return persistencia.obtenTallasApartadas();
+    }
+    
+     /* Regresa una lista de todos los registros en MovimientoEnApartado.
+     *
+     * @return La lista de todos los abonos  existentes.
+     * @throws Exception
+     */
+    public List<MovimientoEnApartado> obtenAbonosRegistrados() throws Exception {
+        IntPersistencia persistencia = new Persistencia();
+        
+        return persistencia.obtenAbonosRegistrados();
+    }
+
 }
