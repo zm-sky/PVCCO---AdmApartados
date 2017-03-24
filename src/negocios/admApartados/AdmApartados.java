@@ -73,8 +73,21 @@ public class AdmApartados {
         admInventario.modificarPorApartadoAgregado(apartado);
     }
     
+    /**
+     * Simplemente cambia el apartado de activo, a inactivo.
+     * Tambien hace llamado al administrador de inventario para mover zapatos a donde deban.
+     * 
+     * @param apartado
+     * @throws Exception 
+     */
     public void cancelarApartado(Apartado apartado) throws Exception {
+        IntPersistencia persistencia = new Persistencia();
+        IntAdmInventario adm = new FacAdmInventario();
         
+        adm.modificarPorApartadoCancelado(apartado);
+        
+        apartado.setEstado('I');
+        persistencia.modificar(apartado);
     }
 
     public void modificarApartado(Apartado apartado) throws Exception {
