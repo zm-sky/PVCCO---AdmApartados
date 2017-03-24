@@ -2,6 +2,7 @@
 package negocios.admApartados;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import negocios.admInventario.FacAdmInventario;
 import objetosNegocio.Apartado;
@@ -57,6 +58,7 @@ public class AdmApartados {
         for(TallaApartado tallaApartada : tallasApartadas){
             //Asignamos el ID automatico nuevo a la talla apartada..
             tallaApartada.setIdTallaApartado(String.valueOf(idTallaApartadaNueva));
+            
             //Y la agregamos a la base de datos.
             persistencia.agregar(tallaApartada);
             
@@ -81,7 +83,7 @@ public class AdmApartados {
     
     public void abonarApartado(Apartado apartado, float cantidadAbonada) throws Exception {
         IntPersistencia persistencia = new Persistencia();
-        
+        System.out.println("Nuevo");
         //Vamos a verificar cuanto se ha abonado a este apartado.
         List<MovimientoEnApartado> listaMovimientos = persistencia.obtenAbonosRegistrados();
         
@@ -89,8 +91,12 @@ public class AdmApartados {
         float cantidadPagada = cantidadAbonada;
         
         //Filtraremos los movimientos para los que sean de este apartado.
-        for(MovimientoEnApartado pago : listaMovimientos)
-            cantidadPagada+=pago.getCantidadAbonada();
+        
+        for(MovimientoEnApartado pago : listaMovimientos){
+            if(pago.getIdApartado().getIdApartado().equalsIgnoreCase(apartado.getIdApartado()))
+                cantidadPagada+=pago.getCantidadAbonada();
+            
+        }
         
         //Ahora vamos a verificar si se ocupa liquidar el apartado.
         //En todo caso, pasaremos a liquidarlo.
@@ -100,6 +106,12 @@ public class AdmApartados {
         //Tenemos que registrar este movimiento en la base de datos.
         MovimientoEnApartado mov = new MovimientoEnApartado();
         mov.setCantidadAbonada(cantidadAbonada);
+        
+        //Tambien les asignaremos un ID al movimiento.
+        int IDNuevo = listaMovimientos.size();
+        mov.setIdMovimientoApartado(String.valueOf(IDNuevo));
+        mov.setFecha(Calendar.getInstance().getTime());
+        mov.setIdApartado(apartado);
         
         //Agregamos lo que se abono a la base de datos.
         persistencia.agregar(mov);
@@ -122,6 +134,7 @@ public class AdmApartados {
         
         //Mandamos a modificar el inventario por liquidacion.
         inv.modificarPorApartadoLiquidado(apartado);
+        persistencia.modificar(apartado);
     }
     
     public Apartado obten(Apartado apartado) throws Exception {
