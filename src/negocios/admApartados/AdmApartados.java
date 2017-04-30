@@ -42,9 +42,9 @@ public class AdmApartados {
         //Tenemos que crear una instancia vacia del apartado en la base de datos sin la lista
         //de tallas que se van a apartar. Esto es porque nos tirara error, ya que no existen
         //registros en la tabla de TallaApartado y en la lista del apartado si.
-        List<TallaApartado> tallasApartadas = new ArrayList(apartado.getTallaApartadoCollection());
+        List<TallaApartado> tallasApartadas = new ArrayList(apartado.getTallaapartadoList());
         
-        apartado.setTallaApartadoCollection(new ArrayList());
+        apartado.setTallaapartadoList(new ArrayList());
         
         //Agregamos el apartado a la base de datos, ya que las tallas apartadas
         //no podran agregarse si este no existe dentro de las tablas.
@@ -67,7 +67,7 @@ public class AdmApartados {
         }
         
         //Le asignamos de nuevo la lista al apartado en caso de que se ocupe.
-        apartado.setTallaApartadoCollection(tallasApartadas);
+        apartado.setTallaapartadoList(tallasApartadas);
         
         //Le resta uno al inventario regular y le suma uno al inventario apartado.
         admInventario.modificarPorApartadoAgregado(apartado);
